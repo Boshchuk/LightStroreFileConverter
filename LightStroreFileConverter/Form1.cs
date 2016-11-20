@@ -35,22 +35,33 @@ namespace LightStroreFileConverter
             foreach (string dir in dirs)
             {
                 Console.WriteLine(dir);
-                richTextBox1.Text = richTextBox1.Text + dir + "/n/r";
+                richTextBox1.Text = richTextBox1.Text + dir + "/r/n";
 
                 var excelApp = new Excel.Application();
 
                 excelApp.Workbooks.Open(dir);
-                excelApp.ActiveWorkbook.SaveAs(@"C:\Output\Book1.xlsx", Excel.XlSaveAsAccessMode.xlNoChange);
+
+                var saveName = NewNameFromPath(dir);
+
+                var savePath = string.Format("{0}{1}", Outputpath(), saveName);
+
+                excelApp.ActiveWorkbook.SaveAs(savePath, Excel.XlFileFormat.xlOpenXMLWorkbook);
                 excelApp.Workbooks.Close();
 
                 excelApp.Quit();
             }
         }
 
-        private static void openFile(string dir)
+        public string NewNameFromPath(string path)
         {
-            //Microsoft.Office.Interop.Excel.Workbooks wk = new 
-           // Microsoft.Office.Interop.Excel.Workbook.Open (dir, null, false, null, string.Empty, string.Empty, null, null, null, false, true, true, false, true, null);
+            var f = new FileInfo(path);
+
+            return string.Format("{0}", f.Name);
+        }
+
+        public string Outputpath()
+        {
+            return @"C:\Output\";
         }
     }
 }
