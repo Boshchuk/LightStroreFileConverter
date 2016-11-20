@@ -85,12 +85,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ExcelAddIn1\ExcelAddIn1.csproj">
-      <Project>{F1EB6427-6F60-4C31-805A-3516EF05E52F}</Project>
-      <Name>ExcelAddIn1</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
