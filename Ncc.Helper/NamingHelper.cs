@@ -55,12 +55,24 @@ namespace Ncc.Helper
        
         }
 
-        //public  string GetNameFromDictionary(string inputName)
-        //{
-        
 
-          
-            
-        //}
+        public  string GetNameFromDictionary(string inputName)
+        {
+            if (Dictionary == null || Dictionary.Count == 0)
+            {
+                throw new InvalidProgramException("Dictionary not ready");
+            }
+
+            // 1 iteartion
+            if (Dictionary.ContainsKey(inputName))
+            {
+                return Dictionary[inputName];
+            }
+            else
+            {
+                return string.Format("Не изменино-{0}", inputName);
+            }
+            // TODO: add iteration 2
+        }
     }
 }

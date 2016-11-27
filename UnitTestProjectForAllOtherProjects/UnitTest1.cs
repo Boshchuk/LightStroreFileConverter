@@ -17,5 +17,17 @@ namespace UnitTestProjectForAllOtherProjects
 
             Assert.IsTrue(length > 0);
         }
+
+        [TestMethod]
+        public void ItemsTest()
+        {
+            var helper = new NamingHelper();
+            helper.ReadDictionary();
+
+
+            var led = helper.GetNameFromDictionary("LED.xls");
+
+            Assert.AreEqual("LED",led);
+        }
     }
 }
