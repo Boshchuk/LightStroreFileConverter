@@ -35,10 +35,8 @@ namespace LightStroreFileConverter
             string[] dirs = Directory.GetFiles(textBox1.Text);
             foreach (string dir in dirs)
             {
-                Console.WriteLine(dir);
                 richTextBox1.Text = richTextBox1.Text + dir + "/r/n";
-
-                
+                               
 
                 var saveName = NewNameFromPath(dir);
 
@@ -49,24 +47,19 @@ namespace LightStroreFileConverter
                 var excelApp = new Excel.Application();
                 excelApp.Workbooks.Open(dir);
 
-                //excelApp.Dra
-                //excelApp.ActiveWorkbook.Worksheets[0].
+            
 
 
                 object o = excelApp.ActiveWorkbook.Application.Selection;
-              //  Microsoft.Office.Interop.Excel.Shape s = (Microsoft.Office.Interop.Excel.Shape)o;
+          
 
                 Excel.Worksheet objSheet = (Excel.Worksheet)excelApp.ActiveWorkbook.ActiveSheet;
                 int[] test = { 1, 2, 3, 4, 5 };
                 var res = objSheet.get_Range(test);
-               // MessageBox.Show(s.Name);
+            
 
                 excelApp.ActiveWorkbook.SaveAs(savePath, Excel.XlFileFormat.xlOpenXMLWorkbook);
-                //excelApp.ActiveWorkbook.SaveAs(savePath, Excel.XlFileFormat.xlOpenXMLWorkbook,
-                //    Missing.Value,
-                //    Missing.Value, false, false, Excel.XlSaveAsAccessMode.xlNoChange,
-                //    Excel.XlSaveConflictResolution.xlUserResolution, true,
-                //    Missing.Value, Missing.Value, Missing.Value);
+             
 
                 excelApp.Workbooks.Close();
 
@@ -78,11 +71,16 @@ namespace LightStroreFileConverter
         {
             var f = new FileInfo(path);
 
+            NamingHelper helper = new NamingHelper();
+            //helper
+            
+
             return string.Format("{0}", f.Name);
         }
 
         public string Outputpath()
         {
+            
             return @"C:\Output\";
         }
     }
