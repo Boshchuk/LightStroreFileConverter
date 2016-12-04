@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.Policy;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Ncc.Helper
 {
@@ -14,8 +12,6 @@ namespace Ncc.Helper
     
 
         public string ConfigFileName { get; set; }
-        
-
 
         public void ReadDictionary()
         {
