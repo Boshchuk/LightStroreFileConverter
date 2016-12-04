@@ -24,6 +24,18 @@ namespace LightStroreFileConverter
             }
         }
 
+        private void WritToRichBox(RichTextBox rbx, string str)
+        {
+            rbx.AppendText(str);
+        }
+
+        public void WriteToRichBox(string str)
+        {
+            WritToRichBox(richTextBox1, str);
+        }
+
+
+
         private void button2_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(textBox1.Text))
@@ -84,5 +96,7 @@ namespace LightStroreFileConverter
         {
             return @"C:\Output\";
         }
+
+        
     }
 }
