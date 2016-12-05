@@ -19,6 +19,8 @@ namespace Ncc.Helper
         /// Имя файла где лежит словарь в формате csv - comma separated values
         /// </summary>
         public string ConfigFileName { get; set; }
+        
+
 
         /// <summary>
         /// Инициализация словаря из файла по умолчанию 
