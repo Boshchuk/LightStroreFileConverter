@@ -71,6 +71,30 @@ namespace Ncc.Helper
             // TODO: add iteration 2
         }
 
-       
+        /// <summary>
+        /// Анализ папки на наличе документов необходимого формата
+        /// </summary>
+        /// <param name="inputFolder"></param>
+        /// <returns></returns>
+        public InputFolderInfo AnalyzeFolder(string inputFolder)
+        {
+            var result = new InputFolderInfo();
+
+            var files = Directory.GetFiles(inputFolder);
+            foreach (var item in files)
+            {
+                if (Dictionary.ContainsKey(item))
+                {
+                    result.PureItemsFromDictionary++;
+                    result.DictionaryItems.Add(item);
+                }
+                else
+                {
+                    result.UnknowItems++;
+                    result.UnknownItmes.Add(item);
+                }
+            }
+            return result;
+        }
     }
 }

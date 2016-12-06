@@ -46,7 +46,7 @@ namespace LightStroreFileConverter
             string[] dirs = Directory.GetFiles(textBox1.Text);
             foreach (string dir in dirs)
             {
-                Console.WriteLine(dir);
+               // Console.WriteLine(dir);
                 richTextBox1.Text = richTextBox1.Text + dir + "/r/n";
 
                 
