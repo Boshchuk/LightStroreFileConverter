@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
-
+using Ncc.Helper;
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace LightStroreFileConverter
@@ -24,21 +24,15 @@ namespace LightStroreFileConverter
             }
         }
 
-        private void WritToRichBox(RichTextBox rbx, string str)
-        {
-            rbx.AppendText(str);
-        }
-
         public void WriteToRichBox(string str)
         {
-            WritToRichBox(richTextBox1, str);
+            FormHelper.WritToRichBox(richTextBox1, str);
         }
-
 
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(textBox1.Text))
+            if (String.IsNullOrEmpty(textBox1.Text))
             {
                 return;
             }
@@ -46,34 +40,18 @@ namespace LightStroreFileConverter
             string[] dirs = Directory.GetFiles(textBox1.Text);
             foreach (string dir in dirs)
             {
-                richTextBox1.Text = richTextBox1.Text + dir + "/r/n";
+                WriteToRichBox(dir);
 
                 
                 var saveName = NewNameFromPath(dir);
 
-                var savePath = string.Format("{0}{1}", Outputpath(), saveName);
-
-
+                var savePath = String.Format("{0}{1}", Outputpath(), saveName);
 
                 var excelApp = new Excel.Application();
                 excelApp.Workbooks.Open(dir);
-
-
-
-
-                object o = excelApp.ActiveWorkbook.Application.Selection;
-
-
-                Excel.Worksheet objSheet = (Excel.Worksheet)excelApp.ActiveWorkbook.ActiveSheet;
-                int[] test = { 1, 2, 3, 4, 5 };
-                var res = objSheet.get_Range(test);
-
-
                 excelApp.ActiveWorkbook.SaveAs(savePath, Excel.XlFileFormat.xlOpenXMLWorkbook);
-             
 
                 excelApp.Workbooks.Close();
-
                 excelApp.Quit();
             }
         }
@@ -83,15 +61,12 @@ namespace LightStroreFileConverter
             var f = new FileInfo(path);
 
             NamingHelper helper = new NamingHelper();
-            //helper
-            
-
-            return string.Format("{0}", f.Name);
+            helper.ReadDictionary();
+            return helper.GetNameFromDictionary(f.Name);
         }
 
         public string Outputpath()
         {
-            
             return @"C:\Output\";
         }
 

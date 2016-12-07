@@ -26,7 +26,11 @@ namespace UnitTestProjectForAllOtherProjects
 
             Assert.AreEqual(expected, led);
         }
-
+        /// ItemsTest("summary>
+        /// Тестовый метод, который вызывает "ItemsTest"- для проверки
+        ///  соотвествия каждого входного параметра - выходному имени каталога
+        /// 
+        /// ItemsTest("/summary>
         [TestMethod]
         public void CheckAllDictionary()
         {
@@ -40,10 +44,35 @@ namespace UnitTestProjectForAllOtherProjects
             ItemsTest("ГАЛОГЕН (ВЕТКИ).xls", "Галоген (Ветки)");
             ItemsTest("ГАЛОГЕН.xls", "Галоген");
 
+            // TODO: добавать остальные проверки по образу и подобию
+            // просмотрев пример
             /*
-             * ,,,,
-,,,,
-ДЕТСКИЕ.xls,Детские,,,**/
+             * ");,
+");,
+");,**/
+            ItemsTest("ДЕТСКИЕ.xls", "Детские");
+
+            ItemsTest("ЕВРОКАРКАСЫ.xls", "Еврокаркасы");
+            ItemsTest("ЕВРОПА МОДЕРН.xls", "Европа Модерн");
+            ItemsTest("МАНТРА.xls", "Мантра");
+
+            ItemsTest("МОДЕРН.xls", "Модерн");
+            ItemsTest("НАСТЕННО-ПОТОЛОЧНЫЕ СВЕТИЛЬНИКИ.xls", "Настенно-потолочные Светильники");
+            ItemsTest("НАСТОЛЬНЫЕ ЛАМПЫ.xls", "Настольные лампы");
+            ItemsTest("ПОДВЕСНЫЕ СВЕТИЛЬНИКИ.xls", "Подвесные Светильники");
+            ItemsTest("ПРЕСТИЖ.xls", "Престиж");
+            ItemsTest("Пульты и комплектующие.xls", "Пульты и комплектующие");
+            ItemsTest("РОТАНГ.xls", "Ротанг");
+            ItemsTest("САДОВО-ПАРКОВЫЕ СВЕТИЛЬНИКИ.xls", "Садово-парковые Светильники");
+            ItemsTest("СПОТЫ.xls", "Споты");
+            ItemsTest("ТОРШЕРЫ.xls", "Торшеры");
+            ItemsTest("ФЛОРИСТИКА.xls", "Флористика");
+            ItemsTest("ХРУСТАЛЬ.xls", "Хрусталь");
+            ItemsTest("ЧЕРНЫЕ КРУГИ.xls", "Черные круги и квадраты");
+            ItemsTest("ЭКОНОМ.xls", "Эконом");
+            ItemsTest("ЭКСКЛЮЗИВ.xls", "Эксклюзив");
+            ItemsTest("ЭЛИТ.xls", "Элит");
+
         }
     }
 }
