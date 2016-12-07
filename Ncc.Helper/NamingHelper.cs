@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.Policy;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Ncc.Helper
 {
@@ -19,8 +17,6 @@ namespace Ncc.Helper
         /// Имя файла где лежит словарь в формате csv - comma separated values
         /// </summary>
         public string ConfigFileName { get; set; }
-        
-
 
         /// <summary>
         /// Инициализация словаря из файла по умолчанию 
@@ -91,6 +87,32 @@ namespace Ncc.Helper
             {
                 return string.Format("Не изменено-{0}", inputName);
             }
+        }
+
+        /// <summary>
+        /// Анализ папки на наличе документов необходимого формата
+        /// </summary>
+        /// <param name="inputFolder"></param>
+        /// <returns></returns>
+        public InputFolderInfo AnalyzeFolder(string inputFolder)
+        {
+            var result = new InputFolderInfo();
+
+            var files = Directory.GetFiles(inputFolder);
+            foreach (var item in files)
+            {
+                if (Dictionary.ContainsKey(item))
+                {
+                    result.PureItemsFromDictionary++;
+                    result.DictionaryItems.Add(item);
+                }
+                else
+                {
+                    result.UnknowItems++;
+                    result.UnknownItmes.Add(item);
+                }
+            }
+            return result;
         }
     }
 }
