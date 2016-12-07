@@ -43,13 +43,7 @@ namespace UnitTestProjectForAllOtherProjects
 
             ItemsTest("ГАЛОГЕН (ВЕТКИ).xls", "Галоген (Ветки)");
             ItemsTest("ГАЛОГЕН.xls", "Галоген");
-
-            // TODO: добавать остальные проверки по образу и подобию
-            // просмотрев пример
-            /*
-             * ");,
-");,
-");,**/
+          
             ItemsTest("ДЕТСКИЕ.xls", "Детские");
 
             ItemsTest("ЕВРОКАРКАСЫ.xls", "Еврокаркасы");
