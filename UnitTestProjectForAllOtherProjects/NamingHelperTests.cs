@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ncc.Helper;
 
 namespace UnitTestProjectForAllOtherProjects
@@ -67,6 +68,19 @@ namespace UnitTestProjectForAllOtherProjects
             ItemsTest("ЭКСКЛЮЗИВ.xls", "Эксклюзив");
             ItemsTest("ЭЛИТ.xls", "Элит");
 
+        }
+
+        [TestMethod]
+        public void ListOfFilesAnalyzedCorrectly()
+        {
+            var helper = new NamingHelper();
+            helper.ReadDictionary();
+
+            var list = new List<string>() {"БУШЕ G-4.xls", "Книга.xlsx"};
+
+            var res = helper.AnalyzeFileNames(list);
+
+            Assert.AreEqual(1,res.PureItemsFromDictionary);
         }
     }
 }

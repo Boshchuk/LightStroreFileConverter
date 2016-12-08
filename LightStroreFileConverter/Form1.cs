@@ -40,8 +40,7 @@ namespace LightStroreFileConverter
             string[] dirs = Directory.GetFiles(textBox1.Text);
             foreach (string dir in dirs)
             {
-                WriteToRichBox(dir);
-
+                richTextBox1.WriteLine(dir);
                 
                 var saveName = NewNameFromPath(dir);
 

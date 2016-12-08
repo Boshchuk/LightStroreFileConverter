@@ -97,10 +97,15 @@ namespace Ncc.Helper
         /// <returns></returns>
         public InputFolderInfo AnalyzeFolder(string inputFolder)
         {
-            var result = new InputFolderInfo();
-
+           
             var files = Directory.GetFiles(inputFolder);
-            foreach (var item in files)
+            return AnalyzeFileNames(files.ToList());
+        }
+
+        public InputFolderInfo AnalyzeFileNames(List<string> fileNames)
+        {
+            var result = new InputFolderInfo();
+            foreach (var item in fileNames)
             {
                 if (Dictionary.ContainsKey(item))
                 {
