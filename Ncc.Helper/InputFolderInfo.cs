@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Ncc.Helper
@@ -28,6 +29,11 @@ namespace Ncc.Helper
 
             DictionaryItems = new List<string>();
             UnknownItmes = new List<string>();
+        }
+
+        public override string ToString()
+        {
+            return string.Format("Items from dictionary: {0};{2}Unknowns items: {1}", PureItemsFromDictionary, UnknowItems, Environment.NewLine);
         }
     }
 }
