@@ -4,13 +4,13 @@ using System.Windows.Forms;
 using Ncc.Helper;
 using Excel = Microsoft.Office.Interop.Excel;
 
-namespace LightStroreFileConverter
+namespace LightStroreFileConverter //Имя метода - что за бред
 {
-    public partial class Form1 : Form
+    public partial class Form1 : Form // создание под ка-ласса Form???
     {
         public Form1()
         {
-            InitializeComponent();
+            InitializeComponent();// инициализация компонента - какого компонента?  
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -55,8 +55,14 @@ namespace LightStroreFileConverter
                 excelApp.Quit();
             }
         }
-
-        public string NewNameFromPath(string path)
+        /// <summary>
+        /// Я три раза нажал на /// и такое случилось
+        /// а Витюша дибиленоек не смог прочитать задание так как онон написано
+        /// Используя коментария вида ///  - разобраться что это за коментарии такие - подписать все методы (кроме сгенерированных)
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public string NewNameFromPath(string path)// Я не знаю что он делает  - а почитать что внутри? в поезде зарядки небыло? или этого небыло в поставах?
         {
             var f = new FileInfo(path);
 
@@ -65,6 +71,12 @@ namespace LightStroreFileConverter
             return helper.GetNameFromDictionary(f.Name);
         }
 
+        /// <summary>
+        /// Выходная директория  
+        /// Output
+        /// path
+        /// </summary>
+        /// <returns>Возвращает путь выходной директории</returns>
         public string Outputpath()
         {
             return @"C:\Output\";
