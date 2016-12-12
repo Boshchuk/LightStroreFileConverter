@@ -59,6 +59,10 @@ namespace LightStroreFileConverter //Имя метода - что за бред
             string[] dirs = Directory.GetFiles(textBoxFolderPath.Text);
             foreach (string dir in dirs)
             {
+                if (dir.Contains("~$"))
+                {
+                    continue;
+                }
                 richTextBox1.WriteLine(dir);
                 
                 var saveName = NewNameFromPath(dir);
@@ -67,6 +71,10 @@ namespace LightStroreFileConverter //Имя метода - что за бред
 
                 var excelApp = new Excel.Application();
                 excelApp.Workbooks.Open(dir);
+                //TODO: обрабоать ситуации нестабильной работы с некоторыми файлами вида ""C:\\Users\\Victor\\Desktop\\Товары\\~$Книга1.xlsx""
+                //~$Книга1.xlsx" - похоже на временный невидимый файл
+                // будем пропустать все что содержит ~$
+
                 excelApp.ActiveWorkbook.SaveAs(savePath, Excel.XlFileFormat.xlOpenXMLWorkbook);
 
                 excelApp.Workbooks.Close();
