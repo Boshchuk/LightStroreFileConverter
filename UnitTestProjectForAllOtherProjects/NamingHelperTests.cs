@@ -76,11 +76,12 @@ namespace UnitTestProjectForAllOtherProjects
             var helper = new NamingHelper();
             helper.ReadDictionary();
 
-            var list = new List<string>() {"БУШЕ G-4.xls", "Книга.xlsx"};
+            var list = new List<string> {"БУШЕ G-4.xls", "Книга.xlsx"};
 
             var res = helper.AnalyzeFileNames(list);
 
-            Assert.AreEqual(1,res.PureItemsFromDictionary);
+            Assert.AreEqual(1,res.PureItemsFromDictionaryCount);
+            Assert.AreEqual(1, res.UnknownItemsCount);
         }
     }
 }

@@ -97,25 +97,39 @@ namespace Ncc.Helper
         /// <returns></returns>
         public InputFolderInfo AnalyzeFolder(string inputFolder)
         {
-           
             var files = Directory.GetFiles(inputFolder);
-            return AnalyzeFileNames(files.ToList());
+            return AnalyzeFullFileNames(files.ToList());
+        }
+
+        public InputFolderInfo AnalyzeFullFileNames(List<string> filePathes)
+        {
+            var fileNames = new List<string>();
+
+            foreach (var item in filePathes)
+            {
+                var fileInfo = new FileInfo(item);
+                var fileName = fileInfo.Name;
+                fileNames.Add(fileName);
+            }
+
+            return AnalyzeFileNames(fileNames);
         }
 
         public InputFolderInfo AnalyzeFileNames(List<string> fileNames)
         {
             var result = new InputFolderInfo();
+
             foreach (var item in fileNames)
             {
                 if (Dictionary.ContainsKey(item))
                 {
-                    result.PureItemsFromDictionary++;
+                    result.PureItemsFromDictionaryCount++;
                     result.DictionaryItems.Add(item);
                 }
                 else
                 {
-                    result.UnknowItems++;
-                    result.UnknownItmes.Add(item);
+                    result.UnknownItemsCount++;
+                    result.UnknownItemes.Add(item);
                 }
             }
             return result;
