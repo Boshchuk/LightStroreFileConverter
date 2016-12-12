@@ -27,7 +27,7 @@ namespace LightStroreFileConverter
             bttnTransform.Enabled = false;
             if (_currentFolderInfo.TotalItemsCount > 0)
             {
-                checkBox1.Enabled = true;
+           //     checkBox1.Enabled = true;
                 bttnTransform.Enabled = true;
             }
         }
