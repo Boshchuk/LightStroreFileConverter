@@ -12,15 +12,19 @@ namespace LightStroreFileConverter //Имя метода - что за бред
 
         private InputFolderInfo _currentFolderInfo = new InputFolderInfo();
 
-        public string OutPutFolderPath { get; set; } = @"C:\Output\";
+        public string OutPutFolderPath { get; set; } 
 
-        public bool OutPutFolderExist { get; set; } = false;
+        public bool OutPutFolderExist { get; set; }
 
         public Form1()
         {
             InitializeComponent();// инициализация компонента - какого компонента?  
             _helper.ReadDictionary();
             _currentFolderInfo.TotalItemsCountChanged += InfoChangedHandler;
+
+            OutPutFolderPath = @"C:\Output\";
+
+            OutPutFolderExist = false;
 
             PrepareOutPutFolder();
         }
