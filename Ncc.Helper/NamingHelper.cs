@@ -77,9 +77,10 @@ namespace Ncc.Helper
             }
 
             // 1 iteartion
-            if (Dictionary.ContainsKey(inputName))
+            string value;
+            if (Dictionary.TryGetValue(inputName, out value))
             {
-                return Dictionary[inputName];
+                return value;
             }
             // TODO: придумать способы определения "похожих названий" (полезно, что бы не менять словарь)
             // TODO: это не приоритетно сейчас
