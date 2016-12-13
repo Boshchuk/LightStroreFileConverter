@@ -43,7 +43,7 @@ namespace LightStroreFileConverter //Имя метода - что за бред
                 {
                     Directory.CreateDirectory(OutPutFolderPath);
                     OutPutFolderExist = true;
-                    richTextBox1.WriteLine("Выходная директория успешно создана");
+                    richTextBox1.WriteLine(string.Format("Выходная директория: {0} успешно создана", OutPutFolderPath));
                 }
                 catch (Exception)
                 {
