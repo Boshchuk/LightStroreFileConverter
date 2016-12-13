@@ -134,13 +134,7 @@ namespace LightStroreFileConverter //Имя метода - что за бред
         {
             LongOperationWraper(() => ProcessDocuments());
         }
-        /// <summary>
-        /// Я три раза нажал на /// и такое случилось
-        /// а Витюша дибиленоек не смог прочитать задание так как онон написано
-        /// Используя коментария вида ///  - разобраться что это за коментарии такие - подписать все методы (кроме сгенерированных)
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
+    
         public string NewNameFromPath(string path)// Я не знаю что он делает  - а почитать что внутри? в поезде зарядки небыло? или этого небыло в поставах?
         {
             var f = new FileInfo(path);
@@ -200,6 +194,8 @@ namespace LightStroreFileConverter //Имя метода - что за бред
         {
             bttnAnalyzeFolder.Enabled = !string.IsNullOrEmpty(textBoxFolderPath.Text);
         }
+
+    
     }
 
   
