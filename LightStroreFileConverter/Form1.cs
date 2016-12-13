@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using Ncc.Helper;
@@ -8,6 +9,9 @@ namespace LightStroreFileConverter //Имя метода - что за бред
 {
     public partial class Form1 : Form // создание под ка-ласса Form???
     {
+        public delegate void LongActionDelegate();
+
+
         readonly NamingHelper _helper = new NamingHelper();
 
         private InputFolderInfo _currentFolderInfo = new InputFolderInfo();
@@ -82,8 +86,18 @@ namespace LightStroreFileConverter //Имя метода - что за бред
             FormHelper.WritToRichBox(richTextBox1, str);
         }
 
+        private void LongOperationWraper(LongActionDelegate dl)
+        {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
 
-        private void button2_Click(object sender, EventArgs e)
+            dl();
+
+            stopwatch.Stop();
+            richTextBox1.WriteLine(string.Format("Время выполнения операции: {0}", stopwatch.Elapsed));
+        }
+
+        private void ProcessDocuments()
         {
             if (String.IsNullOrEmpty(textBoxFolderPath.Text))
             {
@@ -98,7 +112,7 @@ namespace LightStroreFileConverter //Имя метода - что за бред
                     continue;
                 }
                 richTextBox1.WriteLine(dir);
-                
+
                 var saveName = NewNameFromPath(dir);
 
                 var savePath = String.Format("{0}{1}", Outputpath(), saveName);
@@ -114,6 +128,11 @@ namespace LightStroreFileConverter //Имя метода - что за бред
                 excelApp.Workbooks.Close();
                 excelApp.Quit();
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            LongOperationWraper(() => ProcessDocuments());
         }
         /// <summary>
         /// Я три раза нажал на /// и такое случилось
