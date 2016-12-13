@@ -12,13 +12,47 @@ namespace LightStroreFileConverter
 
         private InputFolderInfo _currentFolderInfo = new InputFolderInfo();
 
+        public string OutPutFolderPath { get; set; } = @"C:\Output\";
+
+        public bool OutPutFolderExist { get; set; } = false;
+
         public Form1()
         {
             InitializeComponent();
 
             _helper.ReadDictionary();
-
             _currentFolderInfo.TotalItemsCountChanged += InfoChangedHandler;
+
+            PrepareOutPutFolder();
+        }
+
+        private void PrepareOutPutFolder()
+        {
+            richTextBox1.WriteLine(string.Format("Проверка выходной директории: {0}", OutPutFolderPath));
+            var exist = Directory.Exists(OutPutFolderPath);
+
+            if (exist)
+            {
+                richTextBox1.WriteLine("Выходная директория присутствует...");
+                OutPutFolderExist = true;
+            }
+            else
+            {
+                richTextBox1.WriteLine("Выходная директория отсутствует... Попытка создания");
+
+                try
+                {
+                    Directory.CreateDirectory(OutPutFolderPath);
+                    OutPutFolderExist = true;
+                    richTextBox1.WriteLine("Выходная директория успешно создана");
+                }
+                catch (Exception)
+                {
+                    richTextBox1.WriteLine("Ошибка создания выходной директории...");
+                    richTextBox1.WriteLine("Основная функциональность недоступна...");
+                    OutPutFolderExist = false;
+                }
+            }
         }
 
         private void InfoChangedHandler(object sender, EventArgs e)
@@ -85,7 +119,7 @@ namespace LightStroreFileConverter
 
         public string Outputpath()
         {
-            return @"C:\Output\";
+            return OutPutFolderPath;
         }
 
         private void label1_Click(object sender, EventArgs e)
