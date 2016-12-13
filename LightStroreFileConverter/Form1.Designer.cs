@@ -146,7 +146,6 @@ namespace LightStroreFileConverter
             this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Form1";
             this.Text = "Утилита импорта продуктов в каталог.  v.0.1.";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
