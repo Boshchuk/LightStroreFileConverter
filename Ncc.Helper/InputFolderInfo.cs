@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Ncc.Helper
 {
     /// <summary>
-    /// Контейней для информации, которую можно получить из "вхожной папки"
+    /// Контейнер для информации, которую можно получить из "входной папки"
     /// </summary>
     public class InputFolderInfo
     {
@@ -60,7 +60,7 @@ namespace Ncc.Helper
 
         public override string ToString()
         {
-            return string.Format("Items from dictionary: {0};{2}Unknowns items: {1}", PureItemsFromDictionaryCount, UnknownItemsCount, Environment.NewLine);
+            return string.Format("Кол-во объектов из словаря: {0};{2}Кол-во неизвестных объектов: {1}", PureItemsFromDictionaryCount, UnknownItemsCount, Environment.NewLine);
         }
     }
 }
