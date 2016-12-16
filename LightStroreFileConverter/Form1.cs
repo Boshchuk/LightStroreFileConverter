@@ -1,4 +1,6 @@
-﻿using System;///Объявление using System дает возможность ссылаться на классы, которые находятся в пространстве имен System, так что их можно использовать, не добавляя System. перед именем типа.
+﻿using System;
+using System.ComponentModel;
+using System;///Объявление using System дает возможность ссылаться на классы, которые находятся в пространстве имен System, так что их можно использовать, не добавляя System. перед именем типа.
 using System.Diagnostics;///System.Diagnostics Пространство имен предоставляет классы, позволяющие взаимодействовать с системными процессами, журналами событий и счетчики производительности.
 using System.IO;///Пространство имен System.IO содержит типы, позволяющие осуществлять чтение и запись в файлы и потоки данных, а также типы для базовой поддержки файлов и папок.
 using System.Windows.Forms;///System.Windows.Forms Пространство имен содержит классы для создания приложений Windows, пользующихся преимуществами полного пользовательского интерфейса, предоставляемых в операционной системе Microsoft Windows.
@@ -102,10 +104,17 @@ namespace LightStroreFileConverter ///Ключевое слово namespace ис
 
         private void ProcessDocuments()
         {
+            ProcessDocuments(false);
+        }
+
+        private void ProcessDocuments(bool reportProgress)
+        {
             if (String.IsNullOrEmpty(textBoxFolderPath.Text))
             {
                 return;
             }
+
+         
 
             string[] dirs = Directory.GetFiles(textBoxFolderPath.Text);
             foreach (string dir in dirs)
@@ -133,16 +142,21 @@ namespace LightStroreFileConverter ///Ключевое слово namespace ис
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        public void ProcessDocumentsWarper()
         {
             LongOperationWraper(() => ProcessDocuments());
+        }
+    
+        private void button2_Click(object sender, EventArgs e)
+        {
+            // ProcessDocumentsWarper();
+
+            backgroundWorker1.RunWorkerAsync();
         }
     
         public string NewNameFromPath(string path)// Я не знаю что он делает  - а почитать что внутри? в поезде зарядки небыло? или этого небыло в поставах?
         {
             var f = new FileInfo(path);
-
-          
             return _helper.GetNameFromDictionary(f.Name);
         }
 
@@ -191,6 +205,7 @@ namespace LightStroreFileConverter ///Ключевое слово namespace ис
             {
                 InfoChangedHandler(this, EventArgs.Empty);
             }
+           // backgroundWorker1.RunWorkerAsync();
         }
 
         private void textBoxFolderPath_TextChanged(object sender, EventArgs e)
@@ -198,7 +213,61 @@ namespace LightStroreFileConverter ///Ключевое слово namespace ис
             bttnAnalyzeFolder.Enabled = !string.IsNullOrEmpty(textBoxFolderPath.Text);
         }
 
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            LongOperationWraper(() =>
+            {
+
+                if (String.IsNullOrEmpty(textBoxFolderPath.Text))
+                {
+                    return;
+                }
+
+                var h = _currentFolderInfo.TotalItemsCount;
+
+                var curent = 0;
     
+                string[] dirs = Directory.GetFiles(textBoxFolderPath.Text);
+                foreach (string dir in dirs)
+                {
+                    if (dir.Contains("~$"))
+                    {
+                        continue;
+                    }
+                    richTextBox1.WriteLine(dir);
+
+                    var saveName = NewNameFromPath(dir);
+
+                    var savePath = string.Format("{0}{1}", Outputpath(), saveName);
+
+                    var excelApp = new Excel.Application();
+                    excelApp.Workbooks.Open(dir);
+
+                    excelApp.ActiveWorkbook.SaveAs(savePath, Excel.XlFileFormat.xlOpenXMLWorkbook);
+
+                    excelApp.Workbooks.Close();
+                    excelApp.Quit();
+
+                    curent++;
+                    backgroundWorker1.ReportProgress(h/ curent);
+                }
+            });
+        }
+
+        private void Form1_Load(object sender, System.EventArgs e)
+        {
+            // Start the BackgroundWorker.
+            //  backgroundWorker1.RunWorkerAsync();
+        }
+
+        private void backgroundWorker1_ProgressChanged(object sender,ProgressChangedEventArgs e)
+        {
+            // Change the value of the ProgressBar to the BackgroundWorker progress.
+            progressBar1.Value = e.ProgressPercentage;
+            // Set the text.
+           // this.Text = e.ProgressPercentage.ToString();
+        }
     }
 
   
