@@ -49,6 +49,9 @@ namespace Ncc.Helper
         }
         public event EventHandler TotalItemsCountChanged;
 
+        /// <summary>
+        /// Конструктор для объектов типа InputFolderInfo
+        /// </summary>
         public InputFolderInfo()
         {
             PureItemsFromDictionaryCount = 0;
@@ -58,9 +61,16 @@ namespace Ncc.Helper
             UnknownItemes = new List<string>();
         }
 
+        /// <summary>
+        /// Переопреденный метод ToString
+        /// </summary>
+        /// <returns>Удобное в ковычках представление объекта в ввиде строки</returns>
         public override string ToString()
         {
-            return string.Format("Кол-во объектов из словаря: {0};{2}Кол-во неизвестных объектов: {1}", PureItemsFromDictionaryCount, UnknownItemsCount, Environment.NewLine);
+            return string.Format("Кол-во объектов из словаря: {0};{2}Кол-во неизвестных объектов: {1}",
+                                 PureItemsFromDictionaryCount,
+                                 UnknownItemsCount,
+                                 Environment.NewLine);
         }
     }
 }

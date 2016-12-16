@@ -116,8 +116,18 @@ namespace Ncc.Helper
             return AnalyzeFileNames(fileNames);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fileNames"></param>
+        /// <returns></returns>
         public InputFolderInfo AnalyzeFileNames(List<string> fileNames)
         {
+            // читаем что внутри
+            //пытаемся разобраться
+            // описываем выше что делает методе
+
+
             var result = new InputFolderInfo();
 
             foreach (var item in fileNames)
