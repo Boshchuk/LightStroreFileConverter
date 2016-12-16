@@ -43,6 +43,7 @@ namespace LightStroreFileConverter
             this.bttnAnalyzeFolder = new System.Windows.Forms.Button();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.SuspendLayout();
             // 
             // bttnSelectFolder
@@ -125,10 +126,16 @@ namespace LightStroreFileConverter
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(0, 0);
+            this.progressBar1.Location = new System.Drawing.Point(16, 171);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(100, 23);
+            this.progressBar1.Size = new System.Drawing.Size(383, 43);
             this.progressBar1.TabIndex = 9;
+            // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.WorkerReportsProgress = true;
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
             // 
             // Form1
             // 
@@ -146,6 +153,7 @@ namespace LightStroreFileConverter
             this.Controls.Add(this.bttnSelectFolder);
             this.Name = "Form1";
             this.Text = "Утилита импорта продуктов в каталог.  v.0.1.";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -163,6 +171,7 @@ namespace LightStroreFileConverter
         private Button bttnAnalyzeFolder;
         private CheckBox checkBox1;
         private ProgressBar progressBar1;
+        private BackgroundWorker backgroundWorker1;
     }
 }
 

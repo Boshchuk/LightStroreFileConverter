@@ -1,6 +1,8 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using System.Windows.Forms;
 using Ncc.Helper;
 using Excel = Microsoft.Office.Interop.Excel;
@@ -192,6 +194,7 @@ namespace LightStroreFileConverter //Имя метода - что за бред
             {
                 InfoChangedHandler(this, EventArgs.Empty);
             }
+            backgroundWorker1.RunWorkerAsync();
         }
 
         private void textBoxFolderPath_TextChanged(object sender, EventArgs e)
@@ -199,7 +202,33 @@ namespace LightStroreFileConverter //Имя метода - что за бред
             bttnAnalyzeFolder.Enabled = !string.IsNullOrEmpty(textBoxFolderPath.Text);
         }
 
-    
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            for (int i = 1; i <= 100; i++)
+            {
+                // Wait 100 milliseconds.
+                Thread.Sleep(100);
+                // Report progress.
+                backgroundWorker1.ReportProgress(i);
+            }
+        }
+
+        private void Form1_Load(object sender, System.EventArgs e)
+        {
+            // Start the BackgroundWorker.
+            backgroundWorker1.RunWorkerAsync();
+        }
+
+        private void backgroundWorker1_ProgressChanged(object sender,
+            ProgressChangedEventArgs e)
+        {
+            // Change the value of the ProgressBar to the BackgroundWorker progress.
+            progressBar1.Value = e.ProgressPercentage;
+            // Set the text.
+            this.Text = e.ProgressPercentage.ToString();
+
+        }
     }
 
   
