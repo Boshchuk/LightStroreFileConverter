@@ -105,10 +105,17 @@ namespace LightStroreFileConverter //Имя метода - что за бред
 
         private void ProcessDocuments()
         {
+            ProcessDocuments(false);
+        }
+
+        private void ProcessDocuments(bool reportProgress)
+        {
             if (String.IsNullOrEmpty(textBoxFolderPath.Text))
             {
                 return;
             }
+
+         
 
             string[] dirs = Directory.GetFiles(textBoxFolderPath.Text);
             foreach (string dir in dirs)
@@ -136,16 +143,21 @@ namespace LightStroreFileConverter //Имя метода - что за бред
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        public void ProcessDocumentsWarper()
         {
             LongOperationWraper(() => ProcessDocuments());
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            // ProcessDocumentsWarper();
+
+            backgroundWorker1.RunWorkerAsync();
         }
     
         public string NewNameFromPath(string path)// Я не знаю что он делает  - а почитать что внутри? в поезде зарядки небыло? или этого небыло в поставах?
         {
             var f = new FileInfo(path);
-
-          
             return _helper.GetNameFromDictionary(f.Name);
         }
 
@@ -163,7 +175,7 @@ namespace LightStroreFileConverter //Имя метода - что за бред
         private void label1_Click(object sender, EventArgs e)
         {
         
-    }
+        }
 
         private void bttnAnalyzeFolder_Click(object sender, EventArgs e)
         {
@@ -194,7 +206,7 @@ namespace LightStroreFileConverter //Имя метода - что за бред
             {
                 InfoChangedHandler(this, EventArgs.Empty);
             }
-            backgroundWorker1.RunWorkerAsync();
+           // backgroundWorker1.RunWorkerAsync();
         }
 
         private void textBoxFolderPath_TextChanged(object sender, EventArgs e)
@@ -205,29 +217,57 @@ namespace LightStroreFileConverter //Имя метода - что за бред
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            for (int i = 1; i <= 100; i++)
+            LongOperationWraper(() =>
             {
-                // Wait 100 milliseconds.
-                Thread.Sleep(100);
-                // Report progress.
-                backgroundWorker1.ReportProgress(i);
-            }
+
+                if (String.IsNullOrEmpty(textBoxFolderPath.Text))
+                {
+                    return;
+                }
+
+                var h = _currentFolderInfo.TotalItemsCount;
+
+                var curent = 0;
+
+                string[] dirs = Directory.GetFiles(textBoxFolderPath.Text);
+                foreach (string dir in dirs)
+                {
+                    if (dir.Contains("~$"))
+                    {
+                        continue;
+                    }
+                    richTextBox1.WriteLine(dir);
+
+                    var saveName = NewNameFromPath(dir);
+
+                    var savePath = string.Format("{0}{1}", Outputpath(), saveName);
+
+                    var excelApp = new Excel.Application();
+                    excelApp.Workbooks.Open(dir);
+
+                    excelApp.ActiveWorkbook.SaveAs(savePath, Excel.XlFileFormat.xlOpenXMLWorkbook);
+
+                    excelApp.Workbooks.Close();
+                    excelApp.Quit();
+
+                    curent++;
+                    backgroundWorker1.ReportProgress(h/ curent);
+                }
+            });
         }
 
         private void Form1_Load(object sender, System.EventArgs e)
         {
             // Start the BackgroundWorker.
-            backgroundWorker1.RunWorkerAsync();
+            //  backgroundWorker1.RunWorkerAsync();
         }
 
-        private void backgroundWorker1_ProgressChanged(object sender,
-            ProgressChangedEventArgs e)
+        private void backgroundWorker1_ProgressChanged(object sender,ProgressChangedEventArgs e)
         {
             // Change the value of the ProgressBar to the BackgroundWorker progress.
             progressBar1.Value = e.ProgressPercentage;
             // Set the text.
-            this.Text = e.ProgressPercentage.ToString();
-
+           // this.Text = e.ProgressPercentage.ToString();
         }
     }
 
