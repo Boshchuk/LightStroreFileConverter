@@ -1,6 +1,5 @@
-﻿using System;
+﻿using System; //Объявление using System дает возможность ссылаться на классы, которые находятся в пространстве имен System, так что их можно использовать, не добавляя System. перед именем типа.
 using System.ComponentModel;
-using System;//Объявление using System дает возможность ссылаться на классы, которые находятся в пространстве имен System, так что их можно использовать, не добавляя System. перед именем типа.
 using System.Diagnostics;//System.Diagnostics Пространство имен предоставляет классы, позволяющие взаимодействовать с системными процессами, журналами событий и счетчики производительности.
 using System.IO;//Пространство имен System.IO содержит типы, позволяющие осуществлять чтение и запись в файлы и потоки данных, а также типы для базовой поддержки файлов и папок.
 using System.Windows.Forms;//System.Windows.Forms Пространство имен содержит классы для создания приложений Windows, пользующихся преимуществами полного пользовательского интерфейса, предоставляемых в операционной системе Microsoft Windows.
@@ -76,7 +75,6 @@ namespace LightStroreFileConverter //Ключевое слово namespace ис�
 
         private void button1_Click(object sender, EventArgs e)
         {
-
             folderBrowserDialog1 = new FolderBrowserDialog();
             folderBrowserDialog1.RootFolder = Environment.SpecialFolder.MyComputer;
 
@@ -84,11 +82,6 @@ namespace LightStroreFileConverter //Ключевое слово namespace ис�
             {
                 textBoxFolderPath.Text = folderBrowserDialog1.SelectedPath;
             }
-        }
-
-        public void WriteToRichBox(string str)
-        {
-            FormHelper.WritToRichBox(richTextBox1, str);
         }
 
         private void LongOperationWraper(LongActionDelegate dl)
@@ -109,15 +102,13 @@ namespace LightStroreFileConverter //Ключевое слово namespace ис�
 
         private void ProcessDocuments(bool reportProgress)
         {
-            if (String.IsNullOrEmpty(textBoxFolderPath.Text))
+            if (string.IsNullOrEmpty(textBoxFolderPath.Text))
             {
                 return;
             }
 
-         
-
-            string[] dirs = Directory.GetFiles(textBoxFolderPath.Text);
-            foreach (string dir in dirs)
+            var dirs = Directory.GetFiles(textBoxFolderPath.Text);
+            foreach (var dir in dirs)
             {
                 if (dir.Contains("~$"))
                 {
@@ -171,11 +162,6 @@ namespace LightStroreFileConverter //Ключевое слово namespace ис�
             return OutPutFolderPath;
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-        
-    }
-
         private void bttnAnalyzeFolder_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(textBoxFolderPath.Text))
@@ -189,6 +175,7 @@ namespace LightStroreFileConverter //Ключевое слово namespace ис�
             if (!exist)
             {
                 MessageBox.Show("Данная попка не найдена или не существует, проверте путь, или выбирите другую папку");
+                return;
             }
 
             AnalyzeFolder(textBoxFolderPath.Text);
@@ -205,7 +192,8 @@ namespace LightStroreFileConverter //Ключевое слово namespace ис�
             {
                 InfoChangedHandler(this, EventArgs.Empty);
             }
-           // backgroundWorker1.RunWorkerAsync();
+
+            backgroundWorker1.ReportProgress(0);
         }
 
         private void textBoxFolderPath_TextChanged(object sender, EventArgs e)
@@ -218,13 +206,15 @@ namespace LightStroreFileConverter //Ключевое слово namespace ис�
         {
             LongOperationWraper(() =>
             {
-
-                if (String.IsNullOrEmpty(textBoxFolderPath.Text))
+                backgroundWorker1.ReportProgress(0);
+                if (string.IsNullOrEmpty(textBoxFolderPath.Text))
                 {
                     return;
                 }
 
                 var h = _currentFolderInfo.TotalItemsCount;
+
+                float d =  100f / h;
 
                 var curent = 0;
     
@@ -250,7 +240,12 @@ namespace LightStroreFileConverter //Ключевое слово namespace ис�
                     excelApp.Quit();
 
                     curent++;
-                    backgroundWorker1.ReportProgress(h/ curent);
+                    backgroundWorker1.ReportProgress((int) (curent * d));
+
+                    if (curent >= h)
+                    {
+                        backgroundWorker1.ReportProgress(100);
+                    }
                 }
             });
         }

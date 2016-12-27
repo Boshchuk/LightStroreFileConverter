@@ -31,6 +31,8 @@ namespace Ncc.Helper
 
         public List<string> UnknownItemes { get; set; }
 
+        public int AbnormaiItems { get; set; }
+
         public int TotalItemsCount
         {
             get

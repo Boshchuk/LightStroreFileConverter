@@ -132,15 +132,23 @@ namespace Ncc.Helper
 
             foreach (var item in fileNames)
             {
-                if (Dictionary.ContainsKey(item))
+                if (item.Contains("~$"))
                 {
-                    result.PureItemsFromDictionaryCount++;
-                    result.DictionaryItems.Add(item);
+                    result.AbnormaiItems++;
                 }
                 else
                 {
-                    result.UnknownItemsCount++;
-                    result.UnknownItemes.Add(item);
+                    string value;
+                    if (Dictionary.TryGetValue(item, out value))
+                    {
+                        result.PureItemsFromDictionaryCount++;
+                        result.DictionaryItems.Add(item);
+                    }
+                    else
+                    {
+                        result.UnknownItemsCount++;
+                        result.UnknownItemes.Add(item);
+                    }
                 }
             }
             return result;
